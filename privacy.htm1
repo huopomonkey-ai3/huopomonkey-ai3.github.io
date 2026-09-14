@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>隐私政策</title>
+    <style>
+        body{max-width:800px;margin:30px auto;padding:0 20px;font-family:system-ui;background:#fff;color:#333;line-height:1.7}
+        h1{text-align:center;font-size:22px}
+        h2{font-size:18px;margin-top:24px}
+        p{margin:10px 0}
+    </style>
+</head>
+<body>
+    <h1>隐私政策</h1>
+    <p>生效日期：2026年09月15日</p >
+    <h2>一、概述</h2>
+    <p>活泼猴AI智能体（以下简称“本应用”）尊重并保护所有使用服务用户的个人隐私权。本隐私政策将说明我们如何收集、使用、存储和保护您的信息。</p >
+    <h2>二、我们收集的信息</h2>
+    <p>1.账号信息：微信登录获取的用户昵称、头像、openid，用于账号识别；</p >
+    <p>2.对话内容：您和AI对话的文本，用于提供AI回答服务；</p >
+    <p>3.设备基础信息：设备型号、系统版本，用于排查程序问题。</p >
+    <h2>三、信息用途</h2>
+    <p>用于登录鉴权、AI交互服务、功能优化、故障排查，不会未经许可向第三方出售用户个人信息。</p >
+    <h2>四、信息存储</h2>
+    <p>用户数据存储在国内合规云服务器，您可联系我们申请删除账号及相关数据。</p >
+    <h2>五、未成年人保护</h2>
+    <p>未成年人请在监护人同意下使用本产品。</p >
+    <h2>六、联系我们</h2>
+    <p>如有隐私相关疑问，请联系管理员。</p >
+</body>
+</html>
