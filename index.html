@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>活泼猴AI智能体 - 全场景AI商业自动化平台</title>
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  :root {
+    --bg: #05070d;
+    --bg-2: #0a0f1c;
+    --panel: #111827;
+    --panel-2: #151c2f;
+    --line: rgba(56, 120, 255, 0.18);
+    --line-strong: rgba(72, 140, 255, 0.35);
+    --text: #e6edf7;
+    --text-2: #9aa7bd;
+    --text-3: #64748b;
+    --primary: #3b82f6;
+    --primary-2: #2563eb;
+    --primary-glow: rgba(59, 130, 246, 0.55);
+    --accent: #22d3ee;
+    --success: #34d399;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    font-family: "Inter", "PingFang SC", "Microsoft YaHei", system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    line-height: 1.75;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+
+  /* ===== Nav ===== */
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    background: rgba(5, 7, 13, 0.78);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .nav-wrap {
+    height: 72px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .logo {
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    background: linear-gradient(90deg, #60a5fa, #a5f3fc);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .nav-menu {
+    display: flex;
+    gap: 28px;
+  }
+
+  .nav-menu a {
+    font-size: 14px;
+    color: var(--text-2);
+    transition: color 0.25s ease;
+  }
+
+  .nav-menu a:hover {
+    color: #fff;
+  }
+
+  .nav-btn {
+    padding: 9px 18px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    color: #dbeafe;
+    font-size: 14px;
+    transition: all 0.25s ease;
+  }
+
+  .nav-btn:hover {
+    background: var(--primary-2);
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.18);
+  }
+
+  /* ===== Hero ===== */
+  .hero {
+    position: relative;
+    padding: 160px 0 110px;
+    overflow: hidden;
+    background:
+      radial-gradient(1200px 600px at 20% 10%, rgba(59, 130, 246, 0.25), transparent 60%),
+      radial-gradient(900px 500px at 80% 20%, rgba(34, 211, 238, 0.12), transparent 60%),
+      linear-gradient(180deg, #05070d 0%, #070c1a 100%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image:
+      linear-gradient(rgba(59, 130, 246, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(59, 130, 246, 0.07) 1px, transparent 1px);
+    background-size: 44px 44px;
+    mask-image: radial-gradient(ellipse at center, black 40%, transparent 75%);
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid var(--line-strong);
+    background: rgba(37, 99, 235, 0.12);
+    color: #bfdbfe;
+    font-size: 13px;
+    margin-bottom: 24px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--success);
+    box-shadow: 0 0 10px var(--success);
+  }
+
+  .hero h1 {
+    font-size: 54px;
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 22px;
+    font-weight: 800;
+  }
+
+  .hero h1 .gradient {
+    background: linear-gradient(90deg, #60a5fa 0%, #22d3ee 50%, #a5f3fc 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  .hero p {
+    max-width: 720px;
+    margin: 0 auto 36px;
+    font-size: 17px;
+    color: var(--text-2);
+  }
+
+  .hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 14px;
+    flex-wrap: wrap;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 13px 26px;
+    border-radius: 12px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    border: 1px solid transparent;
+    cursor: pointer;
+  }
+
+  .btn-primary {
+    background: linear-gradient(135deg, #2563eb, #3b82f6);
+    color: #fff;
+    box-shadow: 0 10px 30px rgba(37, 99, 235, 0.35);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(59, 130, 246, 0.55);
+  }
+
+  .btn-ghost {
+    border-color: var(--line-strong);
+    color: #dbeafe;
+    background: rgba(255, 255, 255, 0.02);
+  }
+
+  .btn-ghost:hover {
+    background: rgba(59, 130, 246, 0.12);
+    transform: translateY(-2px);
+  }
+
+  /* ===== Section Common ===== */
+  section {
+    padding: 100px 0;
+  }
+
+  .section-head {
+    text-align: center;
+    margin-bottom: 64px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 14px;
+  }
+
+  .section-head h2 {
+    font-size: 34px;
+    margin-bottom: 14px;
+    font-weight: 700;
+  }
+
+  .section-head p {
+    color: var(--text-2);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+
+  /* ===== Feature Grid ===== */
+  .feature-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .feature-card {
+    position: relative;
+    padding: 30px;
+    border-radius: 20px;
+    background: linear-gradient(180deg, rgba(21, 28, 47, 0.9), rgba(17, 24, 39, 0.9));
+    border: 1px solid var(--line);
+    overflow: hidden;
+    transition: transform 0.3s ease, border-color 0.3s ease;
+  }
+
+  .feature-card::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 40px;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary), var(--accent));
+  }
+
+  .feature-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--line-strong);
+  }
+
+  .feature-icon {
+    width: 48px;
+    height: 48px;
+    border-radius: 14px;
+    background: rgba(37, 99, 235, 0.15);
+    border: 1px solid var(--line-strong);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    margin-bottom: 18px;
+  }
+
+  .feature-card h3 {
+    font-size: 18px;
+    margin-bottom: 10px;
+    color: #fff;
+  }
+
+  .feature-card p {
+    color: var(--text-2);
+    font-size: 14.5px;
+  }
+
+  /* ===== Business Matrix ===== */
+  .business {
+    background:
+      radial-gradient(800px 400px at 10% 0%, rgba(59, 130, 246, 0.18), transparent 60%),
+      radial-gradient(800px 400px at 90% 100%, rgba(34, 211, 238, 0.1), transparent 60%),
+      var(--bg-2);
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .business-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .business-card {
+    padding: 32px;
+    border-radius: 20px;
+    background: rgba(17, 24, 39, 0.8);
+    border: 1px solid var(--line);
+    transition: all 0.3s ease;
+  }
+
+  .business-card:hover {
+    border-color: var(--primary-glow);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+  }
+
+  .business-card .num {
+    font-size: 13px;
+    color: var(--primary);
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+  }
+
+  .business-card h3 {
+    font-size: 20px;
+    margin-bottom: 12px;
+  }
+
+  .business-card p {
+    color: var(--text-2);
+    font-size: 14.5px;
+  }
+
+  /* ===== System Modules ===== */
+  .system-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 22px;
+  }
+
+  .system-card {
+    padding: 28px;
+    border-radius: 18px;
+    background: rgba(17, 24, 39, 0.7);
+    border: 1px solid var(--line);
+    transition: all 0.25s ease;
+  }
+
+  .system-card:hover {
+    background: rgba(21, 28, 47, 0.95);
+    border-color: var(--line-strong);
+  }
+
+  .system-card h3 {
+    font-size: 17px;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .system-card h3::before {
+    content: "";
+    width: 3px;
+    height: 18px;
+    background: linear-gradient(180deg, var(--primary), var(--accent));
+    border-radius: 2px;
+  }
+
+  .system-card p {
+    color: var(--text-2);
+    font-size: 14px;
+  }
+
+  /* ===== Doc / CTA ===== */
+  .doc-section {
+    background:
+      radial-gradient(700px 300px at 50% 0%, rgba(59, 130, 246, 0.18), transparent 60%),
+      var(--bg-2);
+    border-top: 1px solid var(--line);
+  }
+
+  .doc-card {
+    max-width: 760px;
+    margin: 0 auto;
+    padding: 40px;
+    border-radius: 24px;
+    background: linear-gradient(180deg, rgba(37, 99, 235, 0.12), rgba(17, 24, 39, 0.9));
+    border: 1px solid var(--line-strong);
+    text-align: center;
+  }
+
+  .doc-card h3 {
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+
+  .doc-card p {
+    color: var(--text-2);
+    margin-bottom: 24px;
+  }
+
+  .doc-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    border-radius: 999px;
+    background: var(--primary-2);
+    color: #fff;
+    font-weight: 600;
+    border: 1px solid var(--primary);
+    transition: all 0.25s ease;
+  }
+
+  .doc-link:hover {
+    background: var(--primary);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 24px rgba(59, 130, 246, 0.45);
+  }
+
+  /* ===== Footer ===== */
+  footer {
+    padding: 60px 0 40px;
+    border-top: 1px solid var(--line);
+    background: #07090f;
+  }
+
+  .footer-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  footer p {
+    color: var(--text-3);
+    font-size: 14px;
+  }
+
+  footer a {
+    color: var(--text-2);
+    margin-left: 20px;
+    transition: color 0.25s ease;
+  }
+
+  footer a:hover {
+    color: #fff;
+  }
+
+  /* ===== Responsive ===== */
+  @media (max-width: 960px) {
+    .feature-grid,
+    .business-grid,
+    .system-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+
+    .hero h1 {
+      font-size: 40px;
+    }
+  }
+
+  @media (max-width: 720px) {
+    .nav-menu {
+      display: none;
+    }
+
+    .hero {
+      padding: 140px 0 80px;
+    }
+
+    .hero h1 {
+      font-size: 32px;
+    }
+
+    .feature-grid,
+    .business-grid,
+    .system-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .footer-inner {
+      flex-direction: column;
+      text-align: center;
+    }
+  }
+</style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="container nav-wrap">
+    <div class="logo">活泼猴AI智能体</div>
+    <div class="nav-menu">
+      <a href="#feature">核心能力</a>
+      <a href="#business">商业矩阵</a>
+      <a href="#system">系统功能</a>
+      <a href="https://huopomonkey-ai3.github.io/privacy.html" target="_blank">合规文档</a>
+    </div>
+    <a href="https://huopomonkey-ai3.github.io/privacy.html" target="_blank" class="nav-btn">查看隐私政策</a>
+  </div>
+</nav>
+
+<!-- Hero -->
+<section class="hero">
+  <div class="hero-grid"></div>
+  <div class="container hero-content">
+    <div class="eyebrow">
+      <span class="dot"></span>
+      全场景AI商业自动化平台
+    </div>
+    <h1>让AI成为企业的<br />
+      <span class="gradient">增长与运营引擎</span>
+    </h1>
+    <p>AI智能体、自动办公、数字人、AI短剧、云连锁、客户跟进与智能复盘一体化，帮助企业重构内容生产、客户转化和团队协作流程。</p>
+    <div class="hero-buttons">
+      <a href="#feature" class="btn btn-primary">探索核心能力</a>
+      <a href="#business" class="btn btn-ghost">了解商业矩阵</a>
+    </div>
+  </div>
+</section>
+
+<!-- Core AI Capabilities -->
+<section id="feature">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag">CORE AI CAPABILITIES</div>
+      <h2>核心AI智能体能力</h2>
+      <p>从人机协作到流程自动化，AI智能体覆盖办公、内容、客户服务与培训场景。</p>
+    </div>
+
+    <div class="feature-grid">
+      <div class="feature-card">
+        <div class="feature-icon">🤖</div>
+        <h3>AI智能体交互</h3>
+        <p>支持专属人设、连续记忆、智能问答与场景化对话，可用于办公助手、客服助手、培训助手和私域AI伙伴。</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">⚙️</div>
+        <h3>AI自动办公</h3>
+        <p>自动整理资料、生成文案、汇总信息、润色内容，减少重复性办公工作，提升团队协作效率。</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">👤</div>
+        <h3>数字人形象引擎</h3>
+        <p>企业级数字人形象库，支持AI生成播报、讲解、口播视频，适合课程、招商、产品介绍和客户触达。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Business Matrix -->
+<section id="business" class="business">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag">BUSINESS MATRIX</div>
+      <h2>AI商业矩阵业务</h2>
+      <p>以AI内容为入口，连接云连锁、用户好友体系与数字资产，形成可复制的商业增长模型。</p>
+    </div>
+
+    <div class="business-grid">
+      <div class="business-card">
+        <div class="num">01</div>
+        <h3>AI短剧生成</h3>
+        <p>AI辅助剧本创作、内容改写、配音与视频化生产，帮助团队批量生成短剧和短视频内容。</p>
+      </div>
+
+      <div class="business-card">
+        <div class="num">02</div>
+        <h3>AI云连锁</h3>
+        <p>云端连锁与合伙人体系，支持招商、分佣、素材分发、团队关系管理，构建轻资产运营网络。</p>
+      </div>
+
+      <div class="business-card">
+        <div class="num">03</div>
+        <h3>智能体用户好友</h3>
+        <p>用户好友绑定、关系链管理、智能体互动与私域沉淀，帮助平台建立活跃的AI用户社区。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- System Modules -->
+<section id="system">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag">SYSTEM FUNCTIONS</div>
+      <h2>全功能智能商业工作台</h2>
+      <p>围绕内容、客户、培训、数据与记忆，构建统一的AI运营中台。</p>
+    </div>
+
+    <div class="system-grid">
+      <div class="system-card">
+        <h3>AI智能体培训课件系统</h3>
+        <p>AI生成课件、讲义、话术和培训材料，帮助企业完成团队培训、合伙人教学与标准化知识输出。</p>
+      </div>
+
+      <div class="system-card">
+        <h3>客户智能跟进</h3>
+        <p>智能话术、跟进提醒、客户标签、意向判断与回访建议，提升销售跟进效率和转化可能性。</p>
+      </div>
+
+      <div class="system-card">
+        <h3>素材库</h3>
+        <p>集中管理文案、图片、视频、话术和课程素材，支持团队统一调用、快速改写与多端分发。</p>
+      </div>
+
+      <div class="system-card">
+        <h3>多功能工作台</h3>
+        <p>统一后台管理，包含内容创作、用户管理、任务管理、数据看板和运营配置，减少系统切换成本。</p>
+      </div>
+
+      <div class="system-card">
+        <h3>投喂中心</h3>
+        <p>通过指令、模板、案例和创作配方持续训练AI，形成企业专属的内容风格与输出能力。</p>
+      </div>
+
+      <div class="system-card">
+        <h3>记忆库与复盘</h3>
+        <p>沉淀对话记忆、业务资料和关键信息，AI自动复盘工作过程，输出优化建议与行动清单。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Privacy Policy -->
+<section id="doc" class="doc-section">
+  <div class="container">
+    <div class="section-head">
+      <div class="section-tag">COMPLIANCE DOCUMENT</div>
+      <h2>合规与服务文档</h2>
+      <p>应用上架与平台运营所需的官方文档公示入口。</p>
+    </div>
+
+    <div class="doc-card">
+      <h3>隐私政策</h3>
+      <p>请用户在使用产品前仔细阅读隐私政策，了解我们如何收集、使用、存储和保护用户信息。</p>
+      <a href="https://huopomonkey-ai3.github.io/privacy.html" target="_blank" class="doc-link">查看隐私政策协议</a>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container footer-inner">
+    <p>© 2026 活泼猴AI智能体 版权所有</p>
+    <div>
+      <a href="#feature">核心能力</a>
+      <a href="#business">商业矩阵</a>
+      <a href="#system">系统功能</a>
+      <a href="https://huopomonkey-ai3.github.io/privacy.html" target="_blank">隐私政策</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
